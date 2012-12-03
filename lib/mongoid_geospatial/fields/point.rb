@@ -3,7 +3,10 @@ module Mongoid
     class Point
       include Enumerable
       attr_accessor :x, :y
-
+      alias :lat :y
+      alias :lat= :y=
+      alias :lng :x
+      alias :lng= :x=
       def initialize(x=nil, y=nil)
         @x, @y = x, y
       end
@@ -33,7 +36,7 @@ module Mongoid
         [mongoize, r]
       end
 
-      def radius_sphere r = 1, unit = :km
+      def radius_sphere r = 1, unit = :mi
         radius r.to_f/Mongoid::Geospatial.earth_radius[unit]
       end
 
@@ -83,7 +86,6 @@ module Mongoid
           object.respond_to?(:x) ? object.mongoize : object
         end
       end
-
     end
   end
 end
